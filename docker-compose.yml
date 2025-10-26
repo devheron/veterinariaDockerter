@@ -1,0 +1,113 @@
+version: "3.8"
+
+networks:
+  veterinaria-net:
+    driver: bridge
+
+volumes:
+  db_data:
+
+services:
+  mariadb:
+    image: mariadb:10.6
+    container_name: veterinaria-db
+    command: >
+      bash -lc "\
+      mkdir -p /var/lib/mysql/ssl && \
+      cp /etc/ssl-projetomensal.com.br/ca.crt /var/lib/mysql/ssl/ca.crt && \
+      cp /etc/ssl-projetomensal.com.br/fullchain.pem /var/lib/mysql/ssl/fullchain.pem && \
+      cp /etc/ssl-projetomensal.com.br/wildcard_rsa.key /var/lib/mysql/ssl/wildcard_rsa.key && \
+      chown -R mysql:mysql /var/lib/mysql/ssl && \
+      chmod 600 /var/lib/mysql/ssl/wildcard_rsa.key && \
+      exec docker-entrypoint.sh mariadbd"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: veterinaria
+      MYSQL_USER: veterinaria_user
+      MYSQL_PASSWORD: veterinaria_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinariaBack-master/docker/db-init:/docker-entrypoint-initdb.d:ro"
+      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinariaBack-master/docker/mariadb/my.cnf:/etc/mysql/conf.d/ssl.cnf:ro"
+      # Reuse the same certs folder used by Nginx inside the DB container
+      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/certs:/etc/ssl-projetomensal.com.br:ro"
+    networks:
+      - veterinaria-net
+    restart: unless-stopped
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0
+    container_name: veterinaria-keycloak
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: dev-file
+    ports:
+      - "8180:8080"
+    networks:
+      - veterinaria-net
+    restart: unless-stopped
+
+  backend:
+    build: "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinariaBack-master"
+    container_name: veterinaria-backend
+    depends_on:
+      - mariadb
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mariadb://mariadb:3306/veterinaria_s1?sslMode=REQUIRED"
+      SPRING_DATASOURCE_USERNAME: veter_s1
+      SPRING_DATASOURCE_PASSWORD: vetS1!2025
+      # Enable JWT validation from Keycloak (JWKS). Keep Keycloak realm name in sync.
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/veterinaria/protocol/openid-connect/certs
+      # TLS disabled by default. To enable, provide keystore envs and set SSL_ENABLED=true
+      SSL_ENABLED: "false"
+    ports:
+      - "8080:8080"
+    networks:
+      - veterinaria-net
+    restart: unless-stopped
+
+  backend2:
+    build: "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinariaBack-master"
+    container_name: veterinaria-backend2
+    depends_on:
+      - mariadb
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mariadb://mariadb:3306/veterinaria_s2?sslMode=REQUIRED"
+      SPRING_DATASOURCE_USERNAME: veter_s2
+      SPRING_DATASOURCE_PASSWORD: vetS2!2025
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/veterinaria/protocol/openid-connect/certs
+      SSL_ENABLED: "false"
+    networks:
+      - veterinaria-net
+    restart: unless-stopped
+
+  frontend:
+    build: "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinaria-master"
+    container_name: veterinaria-frontend
+    networks:
+      - veterinaria-net
+
+  web:
+    image: nginx:alpine
+    container_name: veterinaria-web
+    depends_on:
+      - backend
+      - backend2
+      - frontend
+    ports:
+      - "4200:80"
+      - "443:443"
+    volumes:
+      # Build do Angular: a PASTA que contém o index.html
+      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinaria-master/dist/veterinaria/browser:/usr/share/nginx/html:ro"
+      # Pasta de config do nginx (usa seu default.conf)
+      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/nginx-conf:/etc/nginx/conf.d:ro"
+      # Certificados TLS conforme pm03.conf (fullchain.pem + wildcard.key)
+      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/certs:/etc/ssl-projetomensal.com.br:ro"
+    networks:
+      - veterinaria-net
+    restart: unless-stopped

@@ -1,0 +1,110 @@
+
+
+---
+
+## 🚀 COMO RODAR NO SEU PC
+
+### **1. Clonar o repositório:**
+
+```powershell
+cd C:\Users\SEU_USUARIO\Documents
+git clone https://github.com/carolbuenodavalos/veterinariaDocker.git
+cd veterinariaDocker
+```
+
+---
+
+### **2. Abrir os arquivos de documentação:**
+
+📂 **Arquivos importantes:**
+- **`README.md`** → Documentação completa
+- **`INSTALACAO-RAPIDA.md`** → Comandos prontos para copiar/colar
+- **`CHECKLIST-INSTALACAO.md`** → Marque o que já fez
+- **`CONTROLE_ACESSO_ROLES.md`** → Como funciona o controle de acesso
+
+---
+
+### **3. Seguir os passos:**
+
+**Resumão:**
+1. Editar arquivo `hosts` (precisa ser Admin)
+2. Executar `docker-compose up -d`
+3. Executar comandos do Keycloak (criar roles, usuários, senhas)
+4. Atribuir roles aos usuários no Keycloak Admin
+5. Testar o sistema em `https://localhost`
+
+**⚠️ IMPORTANTE:** Leia o `README.md` completo! Tem todos os comandos e explicações.
+
+---
+
+## 🔑 CREDENCIAIS
+
+### **Login no Sistema** (https://localhost)
+
+
+### **Keycloak Admin** (http://localhost:8180/admin)
+
+```
+admin / admin
+```
+
+---
+
+## 📋 O QUE FALTA FAZER (PARA VOCÊ)
+
+Conforme os requisitos do professor, falta implementar:
+
+### ✅ **JÁ IMPLEMENTADO:**
+- ✅ TLS em todos os componentes (Nginx HTTPS, MariaDB TLS)
+- ✅ Autenticação centralizada (Keycloak configurado)
+
+- ✅ Controle de acesso no Angular (Route Guards)
+- ✅ Dois sistemas (Sistema 1: Animais/Tutores, Sistema 2: Médicos/Vacinas/Consultas)
+- ✅ Login customizado com username/password
+
+### ❌ **PENDENTE :**
+
+    keycloak:
+
+    -  4 tipos de usuários com roles diferentes
+
+1. **Spring Boot - Autorização no Backend**
+   - Adicionar `@PreAuthorize` nos endpoints
+   - Validar roles no backend
+
+
+2. **OWASP ZAP - Security Scan** 
+   - Rodar scan ZAP nos sistemas
+   - Gerar relatórios de vulnerabilidades
+   - Propor mitigações
+
+3. **Documentação Final** 
+   - Criar diagrama de arquitetura
+   - Screenshots do sistema funcionando
+   - Tabela de portas e serviços
+
+
+---
+
+## 🧪 TESTANDO SE ESTÁ FUNCIONANDO
+
+
+
+---
+
+## 🆘 PROBLEMAS?
+
+- Leia `README.md` seção "Problemas Comuns"
+- Veja os logs: `docker logs veterinaria-keycloak`
+
+
+---
+
+**Link do repositório:**
+https://github.com/carolbuenodavalos/veterinariaDocker
+
+
+
+---
+
+Carol

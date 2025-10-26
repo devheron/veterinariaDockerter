@@ -1,0 +1,40 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Angular
+dist/
+tmp/
+out-tsc/
+.angular/
+
+# Docker volumes e dados
+dbdata/
+veterinariaBack-master/dbdata/
+veterinariaBack-master/target/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+target/
+build/
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.local
