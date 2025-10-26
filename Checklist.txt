@@ -6,11 +6,6 @@
 
 ### **1. Clonar o repositório:**
 
-```powershell
-cd C:\Users\SEU_USUARIO\Documents
-git clone https://github.com/carolbuenodavalos/veterinariaDocker.git
-cd veterinariaDocker
-```
 
 ---
 

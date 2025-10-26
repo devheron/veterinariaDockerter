@@ -38,3 +38,6 @@ logs/
 # Environment
 .env
 .env.local
+
+# Local leftover nested repo folder (avoid re-adding accidental submodule)
+veterinariaBack-master/
