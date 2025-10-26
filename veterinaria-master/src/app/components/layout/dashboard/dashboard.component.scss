@@ -1,0 +1,23 @@
+/* Dashboard styling: use brand colors and Poppins for headings */
+.container h3 {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 700;
+	color: var(--text);
+}
+
+.card-icon {
+	color: var(--brand-1);
+}
+
+.card h5 {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.card h2 {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 700;
+	color: var(--brand-1);
+}
+

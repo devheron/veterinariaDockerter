@@ -1,0 +1,132 @@
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body centralizar">
+            <form #formulario="ngForm" (ngSubmit)="save()">
+              <div class="row">
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input required [(ngModel)]="vacina.nome" mdbInput type="text" name="nome" class="form-control" />
+                    <label mdbLabel class="form-label">Nome da Vacina:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input required [(ngModel)]="vacina.lote" mdbInput type="text" name="lote" class="form-control" />
+                    <label mdbLabel class="form-label">Lote:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input required [(ngModel)]="vacina.dataAplicacao" mdbInput type="date" name="dataAplicacao" class="form-control" />
+                    <label mdbLabel class="form-label">Data de Aplicação:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input [(ngModel)]="vacina.dataProximaDose" mdbInput type="date" name="dataProximaDose" class="form-control" />
+                    <label mdbLabel class="form-label">Data Próxima Dose:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-12">
+                  <mdb-form-control>
+                    <textarea [(ngModel)]="vacina.observacoes" mdbInput name="observacoes" class="form-control"></textarea>
+                    <label mdbLabel class="form-label">Observações:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-6 alinharAEsquerda">
+                      <h5>Animais:</h5>
+                    </div>
+                    <div class="col-6 alinharADireita">
+                      <button type="button" class="btn btn-secondary btn-rounded" (click)="buscarAnimal()">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <table class="border table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Espécie</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (animal of vacina.animais; track $index) {
+                        <tr>
+                          <td>{{animal.nome}}</td>
+                          <td>{{animal.especie}}</td>
+                          <td>
+                            <button class="btn btn-danger btn-rounded" type="button" (click)="deletarAnimal(animal)">
+                              <i class="fas fa-trash fa-xs"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      }@empty {
+                        <tr>
+                          <td colspan="3" class="text-center">Nenhum animal vinculado</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+  
+              @if(vacina.id > 0){
+                <button type="submit" [disabled]="!formulario.valid" class="btn btn-success btn-rounded">
+                  <i class="fas fa-save fa-sm"></i> Atualizar
+                </button>
+              }@else {
+                <button type="submit" [disabled]="!formulario.valid" class="btn btn-success btn-rounded">
+                  <i class="fas fa-save fa-sm"></i> Salvar
+                </button>
+              }
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #modalAnimaisList>
+    <div class="modal-header">
+      <h5 class="modal-title">Listagem de Animais</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+    </div>
+    <div class="modal-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Espécie</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (animal of listaAnimais; track $index) {
+            <tr>
+              <td>{{animal.nome}}</td>
+              <td>{{animal.especie}}</td>
+              <td>
+                <button class="btn btn-primary btn-rounded" type="button" (click)="meuEventoTratamentoAnimal(animal)">
+                  Selecionar
+                </button>
+              </td>
+            </tr>
+          }@empty {
+            <tr>
+              <td colspan="3" class="text-center">Nenhum animal encontrado</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </ng-template>

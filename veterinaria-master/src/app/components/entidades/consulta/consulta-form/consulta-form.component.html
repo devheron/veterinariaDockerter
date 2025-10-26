@@ -1,0 +1,198 @@
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body centralizar">
+            <form #formulario="ngForm" (ngSubmit)="save()">
+              <div class="row">
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input type="datetime-local" required [(ngModel)]="consulta.dataHora" mdbInput name="dataHora" class="form-control" />
+                    <label mdbLabel class="form-label">Data e Hora:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input required [(ngModel)]="consulta.descricao" mdbInput type="text" name="descricao" class="form-control" />
+                    <label mdbLabel class="form-label">Descrição:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input [(ngModel)]="consulta.diagnostico" mdbInput type="text" name="diagnostico" class="form-control" />
+                    <label mdbLabel class="form-label">Diagnóstico:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input [(ngModel)]="consulta.tratamento" mdbInput type="text" name="tratamento" class="form-control" />
+                    <label mdbLabel class="form-label">Tratamento:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input [(ngModel)]="consulta.observacoes" mdbInput type="text" name="observacoes" class="form-control" />
+                    <label mdbLabel class="form-label">Observações:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <select required [(ngModel)]="consulta.statusUrgencia" name="statusUrgencia" class="form-control">
+                      <option value="">Selecione a urgência</option>
+                      <option value="Baixa">Baixa</option>
+                      <option value="Média">Média</option>
+                      <option value="Alta">Alta</option>
+                      <option value="Emergência">Emergência</option>
+                    </select>
+                    <label mdbLabel class="form-label">Urgência:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <select required [(ngModel)]="consulta.status" name="status" class="form-control">
+                      <option value="">Selecione o status</option>
+                      <option value="Agendada">Agendada</option>
+                      <option value="Realizada">Realizada</option>
+                      <option value="Cancelada">Cancelada</option>
+                    </select>
+                    <label mdbLabel class="form-label">Status:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <select required [(ngModel)]="consulta.tipoConsulta" name="tipoConsulta" class="form-control">
+                      <option value="">Selecione o tipo</option>
+                      <option value="Rotina">Rotina</option>
+                      <option value="Exame">Exame</option>
+                      <option value="Cirurgia">Cirurgia</option>
+                      <option value="Emergência">Emergência</option>
+                    </select>
+                    <label mdbLabel class="form-label">Tipo de Consulta:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6"><br>
+                  <div class="input-group mb-3">
+                    @if(consulta.animal){
+                      <div class="border w-100 p-2 text-primary">{{consulta.animal.nome}}</div>
+                      <button (click)="buscarAnimal()" class="btn btn-secondary" type="button" mdbRipple>
+                        Trocar Animal
+                      </button>
+                    }@else {
+                      <div class="border w-100 p-2">Nenhum animal selecionado!</div>
+                      <button (click)="buscarAnimal()" class="btn btn-secondary" type="button" mdbRipple>
+                        Buscar Animal
+                      </button>
+                    }
+                  </div>
+                </div>
+  
+                <div class="col-6"><br>
+                  <div class="input-group mb-3">
+                    @if(consulta.medico){
+                      <div class="border w-100 p-2 text-primary">{{consulta.medico.nome}}</div>
+                      <button (click)="buscarMedico()" class="btn btn-secondary" type="button" mdbRipple>
+                        Trocar Médico
+                      </button>
+                    }@else {
+                      <div class="border w-100 p-2">Nenhum médico selecionado!</div>
+                      <button (click)="buscarMedico()" class="btn btn-secondary" type="button" mdbRipple>
+                        Buscar Médico
+                      </button>
+                    }
+                  </div>
+                </div>
+              </div>
+  
+              @if(consulta.id > 0){
+                <button type="submit" [disabled]="!formulario.valid" class="btn btn-success btn-rounded">
+                  <i class="fas fa-save fa-sm"></i> Atualizar
+                </button>
+              }@else {
+                <button type="submit" [disabled]="!formulario.valid" class="btn btn-success btn-rounded">
+                  <i class="fas fa-save fa-sm"></i> Salvar
+                </button>
+              }
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #modalAnimaisList>
+    <div class="modal-header">
+      <h5 class="modal-title">Listagem de Animais</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+    </div>
+    <div class="modal-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Espécie</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (animal of listaAnimais; track $index) {
+            <tr>
+              <td>{{animal.nome}}</td>
+              <td>{{animal.especie}}</td>
+              <td>
+                <button class="btn btn-primary btn-rounded" type="button" (click)="meuEventoTratamentoAnimal(animal)">
+                  Selecionar
+                </button>
+              </td>
+            </tr>
+          }@empty {
+            <tr>
+              <td colspan="3" class="text-center">Nenhum animal encontrado</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </ng-template>
+  
+  <ng-template #modalMedicosList>
+    <div class="modal-header">
+      <h5 class="modal-title">Listagem de Médicos</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+    </div>
+    <div class="modal-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Especialidade</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (medico of listaMedicos; track $index) {
+            <tr>
+              <td>{{medico.nome}}</td>
+              <td>{{medico.especialidade}}</td>
+              <td>
+                <button class="btn btn-primary btn-rounded" type="button" (click)="meuEventoTratamentoMedico(medico)">
+                  Selecionar
+                </button>
+              </td>
+            </tr>
+          }@empty {
+            <tr>
+              <td colspan="3" class="text-center">Nenhum médico encontrado</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </ng-template>

@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <h3 class="mb-4">Dashboard Veterinário</h3>
+
+  <!-- status da API -->
+  <div class="alert alert-info" role="alert" *ngIf="apiStatus">
+    {{ apiStatus }}
+  </div>
+
+  <div class="row">
+    @for (card of cards; track $index) {
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body text-center">
+            <i class="fas {{card.icon}} fa-3x mb-3 card-icon brand-accent"></i>
+            <h5>{{card.title}}</h5>
+            <h2>{{card.value}}</h2>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

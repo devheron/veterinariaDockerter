@@ -1,0 +1,81 @@
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-12 azul">
+            <div class="card">
+                <div class="card-body">
+                    <h3> <i class="fas fa-user fa-sm"></i> Cadastro de Tutores</h3><br>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <input (keyup)="findByNome()" [(ngModel)]="pesquisa" type="text" class="form-control"
+                                    placeholder="Digite parte do nome do tutor" aria-label="Nome do tutor"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                            <div class="col-6">
+                                <div class="alinharADireita">
+                                    <!-- Esconder botão Novo quando estiver em modo modal (apenas seleção) -->
+                                    <a *ngIf="!modoModal" (click)="new()" class="btn btn-success btn-rounded" mdbRippled>
+                                        <i class="fas fa-plus fa-sm"></i> Novo
+                                    </a>
+                                </div>
+                            </div>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">NOME</th>
+                                <th scope="col">CPF</th>
+                                <th scope="col">TELEFONE</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (tutor of lista; track $index) {
+                            <tr>
+                                <td>{{tutor.id}}</td>
+                                <td>{{tutor.nome}}</td>
+                                <td>{{tutor.cpf}}</td>
+                                <td>{{tutor.telefone}}</td>
+                                    <td class="alinharADireita">
+                                        <!-- Mostrar apenas Selecionar quando usado em modal -->
+                                        <button *ngIf="modoModal" (click)="selecionar(tutor)" class="btn btn-primary btn-rounded me-1" mdbRippled>
+                                            Selecionar
+                                        </button>
+                                        <!-- Botões de editar/excluir aparecem apenas no modo normal -->
+                                        <ng-container *ngIf="!modoModal">
+                                            <a (click)="edit(tutor)" class="btn btn-primary btn-rounded" mdbRippled>
+                                                <i class="fas fa-pencil fa-sm"></i>
+                                            </a>
+                                            <button (click)="delete(tutor)" class="btn btn-danger btn-rounded" mdbRippled>
+                                                <i class="fas fa-trash fa-sm"></i>
+                                            </button>
+                                        </ng-container>
+                                    </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalTutorForm>
+    <div class="modal-header">
+        @if(tutorEdit.id > 0){
+            <h5 class="modal-title">Editar Tutor</h5>
+        }@else {
+            <h5 class="modal-title">Novo Tutor</h5>  
+        }
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+    </div>
+    <div class="modal-body">
+        <app-tutor-form [tutor]="tutorEdit" (meuEvento)="meuEventoTratamento($event)"></app-tutor-form>
+    </div>
+</ng-template>

@@ -1,0 +1,78 @@
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-12 azul">
+            <div class="card">
+                <div class="card-body">
+                    <h3> <i class="fas fa-syringe fa-sm"></i> Cadastro de Vacinas</h3><br>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <input (keyup)="findByNome()" [(ngModel)]="pesquisa" type="text" class="form-control"
+                                    placeholder="Digite parte do nome da vacina" aria-label="Nome da vacina"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="alinharADireita">
+                                <a *ngIf="!modoModal" (click)="new()" class="btn btn-success btn-rounded" mdbRippled>
+                                    <i class="fas fa-plus fa-sm"></i> Novo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">NOME</th>
+                                <th scope="col">LOTE</th>
+                                <th scope="col">DATA APLICAÇÃO</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (vacina of lista; track $index) {
+                            <tr>
+                                <td>{{vacina.id}}</td>
+                                <td>{{vacina.nome}}</td>
+                                <td>{{vacina.lote}}</td>
+                                <td>{{vacina.dataAplicacao | date:'dd/MM/yyyy'}}</td>
+                                <td class="alinharADireita">
+                                    <button *ngIf="modoModal" (click)="selecionar(vacina)" class="btn btn-primary btn-rounded me-1" mdbRippled>
+                                        Selecionar
+                                    </button>
+                                    <ng-container *ngIf="!modoModal">
+                                        <a (click)="edit(vacina)" class="btn btn-primary btn-rounded" mdbRippled>
+                                            <i class="fas fa-pencil fa-sm"></i>
+                                        </a>
+                                        <button (click)="delete(vacina)" class="btn btn-danger btn-rounded" mdbRippled>
+                                            <i class="fas fa-trash fa-sm"></i>
+                                        </button>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalVacinaForm>
+    <div class="modal-header">
+        @if(vacinaEdit.id > 0){
+            <h5 class="modal-title">Editar Vacina</h5>
+        }@else {
+            <h5 class="modal-title">Nova Vacina</h5>  
+        }
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+    </div>
+    <div class="modal-body">
+        <app-vacina-form [vacina]="vacinaEdit" (meuEvento)="meuEventoTratamento($event)"></app-vacina-form>
+    </div>
+</ng-template>

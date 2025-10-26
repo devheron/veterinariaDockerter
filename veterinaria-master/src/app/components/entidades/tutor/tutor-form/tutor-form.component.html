@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body centralizar">
+            <form #formulario="ngForm" (ngSubmit)="save()">
+              <div class="row">
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input required [(ngModel)]="tutor.nome" mdbInput type="text" name="nome" class="form-control" />
+                    <label mdbLabel class="form-label">Nome:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input required [(ngModel)]="tutor.cpf" mdbInput type="text" name="cpf" class="form-control" />
+                    <label mdbLabel class="form-label">CPF:</label>
+                  </mdb-form-control>
+                </div>
+  
+                <div class="col-6">
+                  <mdb-form-control>
+                    <input required [(ngModel)]="tutor.telefone" mdbInput type="text" name="telefone" class="form-control" />
+                    <label mdbLabel class="form-label">Telefone:</label>
+                  </mdb-form-control>
+                </div>
+              </div>
+  
+              @if(tutor.id > 0){
+                <button type="submit" [disabled]="!formulario.valid" class="btn btn-success btn-rounded">
+                  <i class="fas fa-save fa-sm"></i> Atualizar
+                </button>
+              }@else {
+                <button type="submit" [disabled]="!formulario.valid" class="btn btn-success btn-rounded">
+                  <i class="fas fa-save fa-sm"></i> Salvar
+                </button>
+              }
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

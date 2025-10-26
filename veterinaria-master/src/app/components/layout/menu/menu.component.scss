@@ -1,0 +1,66 @@
+/* Menu theme overrides */
+.menu {
+	background: transparent;
+}
+
+.menu .nav-link {
+	color: var(--text);
+}
+
+.menu .nav-link.active, .menu .nav-link:hover {
+	color: var(--brand-1);
+}
+
+/* Topbar custom styling */
+.app-topbar {
+	background: linear-gradient(90deg, var(--brand-1), var(--brand-2)) !important;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.app-topbar .navbar-brand {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 700;
+	color: var(--brand-contrast) !important;
+}
+
+.app-topbar .navbar-brand.d-flex {
+	gap: 8px;
+}
+
+.brand-paw {
+	font-size: 20px;
+	color: var(--brand-contrast);
+}
+
+.brand-text {
+	font-family: 'Poppins', sans-serif;
+	font-weight: 600;
+	font-size: 16px;
+	letter-spacing: 0.4px;
+	color: var(--brand-contrast);
+}
+
+.app-topbar .nav-link {
+	color: rgba(255,255,255,0.92);
+	font-weight: 500;
+}
+
+.app-topbar .nav-link:hover {
+	color: var(--brand-2) !important;
+}
+
+.logout-btn {
+	color: var(--brand-contrast);
+	border: none;
+	padding: 6px 8px;
+}
+
+.logout-icon {
+	color: rgba(255,255,255,0.95);
+	font-size: 18px;
+}
+
+.logout-btn:hover .logout-icon {
+	color: var(--brand-2);
+}
+

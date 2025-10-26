@@ -1,0 +1,50 @@
+<div class="login-wrapper">
+  <div class="card login-card">
+    <div class="left-accent" aria-hidden="true"></div>
+    <div class="card-body login-card-body">
+      <div class="login-brand mb-4 text-center" aria-label="VetSys logo">
+        <!-- ícone SVG de pata -->
+        <svg class="paw-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64" role="img" aria-label="Ícone VetSys">
+          <path fill="currentColor" d="M256 224c-61.9 0-112 50.1-112 112 0 61.9 50.1 112 112 112s112-50.1 112-112c0-61.9-50.1-112-112-112zm-160-64c35.3 0 64-28.7 64-64S131.3 32 96 32 32 60.7 32 96s28.7 64 64 64zm352 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zM160 64c22.1 0 40-17.9 40-40S182.1-16 160-16s-40 17.9-40 40 17.9 40 40 40zm192 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40 17.9 40 40 40z"/>
+        </svg>
+      </div>
+
+      <h5 class="mb-3 text-center">Bem-vindo ao VetSys</h5>
+      <p class="text-muted mb-4 text-center">Faça login com suas credenciais</p>
+      
+      <form (ngSubmit)="logar()">
+        <div class="form-outline mb-4">
+          <input 
+            type="text" 
+            id="username" 
+            class="form-control" 
+            [(ngModel)]="username" 
+            name="username"
+            placeholder="Usuário"
+            required
+            autocomplete="username"
+          />
+          <label class="form-label" for="username">Usuário</label>
+        </div>
+
+        <div class="form-outline mb-4">
+          <input 
+            type="password" 
+            id="password" 
+            class="form-control" 
+            [(ngModel)]="senha" 
+            name="password"
+            placeholder="Senha"
+            required
+            autocomplete="current-password"
+          />
+          <label class="form-label" for="password">Senha</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block mb-4" mdbRipple [disabled]="!username || !senha">
+          <i class="fas fa-sign-in-alt me-2"></i>Entrar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

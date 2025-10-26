@@ -1,0 +1,78 @@
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-12 azul">
+            <div class="card">
+                <div class="card-body">
+                    <h3> <i class="fas fa-paw fa-sm"></i> Cadastro de Animais</h3><br>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <input (keyup)="findByNome()" [(ngModel)]="pesquisa" type="text" class="form-control"
+                                    placeholder="Digite parte do nome do animal" aria-label="Nome do animal"
+                                    aria-describedby="button-addon2" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="alinharADireita">
+                                <a *ngIf="!modoModal" (click)="new()" class="btn btn-success btn-rounded" mdbRippled>
+                                    <i class="fas fa-plus fa-sm"></i> Novo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">NOME</th>
+                                <th scope="col">ESPÉCIE</th>
+                                <th scope="col">TUTOR</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (animal of lista; track $index) {
+                            <tr>
+                                <td>{{animal.id}}</td>
+                                <td>{{animal.nome}}</td>
+                                <td>{{animal.especie}}</td>
+                                <td>{{animal.tutor?.nome}}</td>
+                                <td class="alinharADireita">
+                                    <button *ngIf="modoModal" (click)="selecionar(animal)" class="btn btn-primary btn-rounded me-1" mdbRippled>
+                                        Selecionar
+                                    </button>
+                                    <ng-container *ngIf="!modoModal">
+                                        <a (click)="edit(animal)" class="btn btn-primary btn-rounded" mdbRippled>
+                                            <i class="fas fa-pencil fa-sm"></i>
+                                        </a>
+                                        <button (click)="delete(animal)" class="btn btn-danger btn-rounded" mdbRippled>
+                                            <i class="fas fa-trash fa-sm"></i>
+                                        </button>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalAnimalForm>
+    <div class="modal-header">
+        @if(animalEdit.id > 0){
+            <h5 class="modal-title">Editar Animal</h5>
+        }@else {
+            <h5 class="modal-title">Novo Animal</h5>  
+        }
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+    </div>
+    <div class="modal-body">
+        <app-animal-form [animal]="animalEdit" (meuEvento)="meuEventoTratamento($event)"></app-animal-form>
+    </div>
+</ng-template>
