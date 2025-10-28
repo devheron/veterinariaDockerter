@@ -42,4 +42,9 @@ export class AnimalService {
   update(animal: Animal, id: number): Observable<string> {
     return this.http.put<string>(`${this.API}/${id}`, animal, { responseType: 'text' as 'json' });
   }
+
+  // animal.service.ts
+teste(): Observable<string> {
+  return this.http.get(`${this.API}/teste`, { responseType: 'text' });
+}
 }

@@ -9,7 +9,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
       SPRING_DATASOURCE_URL: jdbc:mariadb://host.docker.internal:3306/veterinariadb
-      SPRING_DATASOURCE_USERNAME: veter_user
-      SPRING_DATASOURCE_PASSWORD: vet2025db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MariaDBDialect

@@ -23,8 +23,14 @@ export class DashboardComponent {
     { title: 'Próximas Consultas', value: 0, icon: 'fa-clock' }
   ];
 
-  ngOnInit() {
+
+ngOnInit(): void {
+  this.http.get('/api/test').subscribe({
+    next: (res: any) => console.log('🔎 Teste backend:', res),
+    error: (err: any) => console.error('❌ Erro no teste:', err)
+  });
+}
     // Health check removido - endpoint não existe no backend
     // Se necessário, pode ser implementado no backend futuramente
   }
-}
+

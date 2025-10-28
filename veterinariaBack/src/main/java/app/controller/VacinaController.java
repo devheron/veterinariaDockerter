@@ -3,6 +3,7 @@ package app.controller;
 import app.entity.Vacina;
 import app.service.VacinaService;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/vacina")
+//@CrossOrigin("*")
 public class VacinaController {
 
     private final VacinaService service;
@@ -18,22 +20,26 @@ public class VacinaController {
         this.service = service;
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER_SISTEMA2')")
     @GetMapping
     public ResponseEntity<List<Vacina>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER_SISTEMA2')")
     @GetMapping("/{id}")
     public ResponseEntity<Vacina> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER_SISTEMA2')")
     // opcional: por nome
     @GetMapping("/search")
     public ResponseEntity<List<Vacina>> search(@RequestParam String nome) {
         return ResponseEntity.ok(service.findByNome(nome));
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER_SISTEMA2')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> create(@RequestBody Vacina dto) {
         Vacina salvo = service.save(dto);
@@ -41,12 +47,14 @@ public class VacinaController {
         return ResponseEntity.created(location).body("Vacina salva com sucesso");
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER_SISTEMA2')")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Vacina dto) {
         service.update(id, dto);
         return ResponseEntity.ok("Vacina atualizada com sucesso");
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER_SISTEMA2')")
     @DeleteMapping(value = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> delete(@PathVariable Long id) {
         service.deleteById(id);

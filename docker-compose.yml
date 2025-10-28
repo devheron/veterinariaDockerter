@@ -29,10 +29,10 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinariaBack-master/docker/db-init:/docker-entrypoint-initdb.d:ro"
-      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinariaBack-master/docker/mariadb/my.cnf:/etc/mysql/conf.d/ssl.cnf:ro"
+      - "C:/Users/heron/OneDrive/Documentos/veterinariaDocker/veterinariaBack/docker/db-init:/docker-entrypoint-initdb.d:ro"
+      - "C:/Users/heron/OneDrive/Documentos/veterinariaDocker/veterinariaBack/docker/mariadb/my.cnf:/etc/mysql/conf.d/ssl.cnf:ro"
       # Reuse the same certs folder used by Nginx inside the DB container
-      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/certs:/etc/ssl-projetomensal.com.br:ro"
+      - "C:/Users/heron/OneDrive/Documentos/veterinariaDocker/certs:/etc/ssl-projetomensal.com.br:ro"
     networks:
       - veterinaria-net
     restart: unless-stopped
@@ -52,7 +52,7 @@ services:
     restart: unless-stopped
 
   backend:
-    build: "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinariaBack-master"
+    build: "C:/Users/heron/OneDrive/Documentos/veterinariaDocker/veterinariaBack"
     container_name: veterinaria-backend
     depends_on:
       - mariadb
@@ -71,7 +71,7 @@ services:
     restart: unless-stopped
 
   backend2:
-    build: "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinariaBack-master"
+    build: "C:/Users/heron/OneDrive/Documentos/veterinariaDocker/veterinariaBack"
     container_name: veterinaria-backend2
     depends_on:
       - mariadb
@@ -86,7 +86,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    build: "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinaria-master"
+    build: "C:/Users/heron/OneDrive/Documentos/veterinariaDocker/veterinaria-master"
     container_name: veterinaria-frontend
     networks:
       - veterinaria-net
@@ -103,11 +103,11 @@ services:
       - "443:443"
     volumes:
       # Build do Angular: a PASTA que contém o index.html
-      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/veterinaria-master/dist/veterinaria/browser:/usr/share/nginx/html:ro"
+      - "C:/Users/heron/OneDrive/Documentos/veterinariaDocker/veterinaria-master/dist/veterinaria/browser:/usr/share/nginx/html:ro"
       # Pasta de config do nginx (usa seu default.conf)
-      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/nginx-conf:/etc/nginx/conf.d:ro"
+      - "C:/Users/heron/OneDrive/Documentos/veterinariaDocker/nginx-conf:/etc/nginx/conf.d:ro"
       # Certificados TLS conforme pm03.conf (fullchain.pem + wildcard.key)
-      - "C:/Users/carol/OneDrive/Documentos/veterinariaDocker/certs:/etc/ssl-projetomensal.com.br:ro"
+      - "C:/Users/heron/OneDrive/Documentos/veterinariaDocker/certs:/etc/ssl-projetomensal.com.br:ro"
     networks:
       - veterinaria-net
     restart: unless-stopped
