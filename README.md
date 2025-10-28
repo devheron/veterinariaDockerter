@@ -46,7 +46,7 @@ Exemplo:
 @PreAuthorize("hasRole('ADMIN') or hasRole('USER_SISTEMA1')")
 @GetMapping("/api/animal")
 public List<Animal> findAll() { ... }
-
+```
 🌐 NGINX
 • 	system1.local.projetomensal.com.br → Backend 1 () + Keycloak ()
 • 	system2.local.projetomensal.com.br → Backend 2 () + Keycloak ()
